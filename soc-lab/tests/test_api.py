@@ -31,3 +31,13 @@ def test_benign_event():
 def test_unconfigured_auth_fails_closed(monkeypatch):
     monkeypatch.delenv("ROSE_SOC_TOKEN")
     assert client.get("/alerts", headers=HEADERS).status_code == 503
+
+def test_alert_triage():
+    created = client.post("/events", headers=HEADERS, json={"source": "synthetic-test", "event_type": "new_listening_port", "host": "demo-host"})
+    assert created.status_code == 201
+    alert = client.get("/alerts", headers=HEADERS).json()[0]
+    response = client.patch(f"/alerts/{alert['id']}", headers=HEADERS, json={"status": "investigating"})
+    assert response.status_code == 200
+    assert response.json()["status"] == "investigating"
+    assert client.patch(f"/alerts/{alert['id']}", headers=HEADERS, json={"status": "invalid"}).status_code == 422
+    assert client.patch("/alerts/999999", headers=HEADERS, json={"status": "resolved"}).status_code == 404
