@@ -35,3 +35,10 @@ See [docs/pi-setup.md](docs/pi-setup.md) for SSH forwarding and collector instru
 
 ## Next
 Device-specific auth, alert investigation workflow, configurable retention, authorized vulnerability scans, and optional Wazuh integration.
+
+## Offline vulnerability inventory (no scanning)
+Create a JSON inventory outside Git (see `examples/vulnerabilities.synthetic.json`), then run:
+```bash
+python3 tools/vulnerability_report.py --input examples/vulnerabilities.synthetic.json --out reports/vulnerabilities.md
+```
+The report does not contact NVD, scan networks, or verify CVEs. Review official vendor advisories before treating any entry as a confirmed vulnerability. Keep actual inventories and generated reports local.
