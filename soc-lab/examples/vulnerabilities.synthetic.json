@@ -1,0 +1,12 @@
+{
+  "assets": [
+    {
+      "asset": "synthetic-pi",
+      "software": "example-service",
+      "version": "0.0",
+      "cve": "",
+      "severity": "unknown",
+      "remediation": "Confirm installed version against official vendor advisory"
+    }
+  ]
+}
