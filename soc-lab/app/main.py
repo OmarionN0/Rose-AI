@@ -71,3 +71,14 @@ def alerts():
 def summary():
     with connect() as db:
         return {"events": db.execute("SELECT COUNT(*) FROM events").fetchone()[0], "open_alerts": db.execute("SELECT COUNT(*) FROM alerts WHERE status='open'").fetchone()[0]}
+
+class AlertStatus(BaseModel):
+    status: str = Field(pattern="^(open|investigating|resolved|false_positive)$")
+
+@app.patch("/alerts/{alert_id}", dependencies=[Depends(authorize)])
+def update_alert(alert_id: int, update: AlertStatus):
+    with connect() as db:
+        cur = db.execute("UPDATE alerts SET status=? WHERE id=?", (update.status, alert_id))
+        if cur.rowcount == 0:
+            raise HTTPException(404, "Alert not found")
+        return {"alert_id": alert_id, "status": update.status}
