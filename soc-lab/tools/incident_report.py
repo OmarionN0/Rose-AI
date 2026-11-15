@@ -20,7 +20,7 @@ def render(db_path: Path):
              f"Alerts reviewed: {len(alerts)}", ""]
     for alert_id, severity, rule, description, status, timestamp, host in alerts:
         # Neutralize Markdown line breaks in untrusted database fields.
-        safe = lambda v: str(v).replace("\\r", " ").replace("\\n", " ").replace("|", "/")
+        safe = lambda v: str(v).replace(chr(13), " ").replace(chr(10), " ").replace("|", "/")
         lines.extend([f"## Alert {alert_id}: {safe(rule)}",
                       f"- Severity: {safe(severity)}",
                       f"- Status: {safe(status)}",
@@ -28,7 +28,7 @@ def render(db_path: Path):
                       f"- Host: {safe(host)}",
                       f"- Triage: {safe(description)}",
                       "- Analyst decision: Pending review", ""])
-    return "\\n".join(lines)
+    return chr(10).join(lines)
 
 def main():
     parser = argparse.ArgumentParser()
