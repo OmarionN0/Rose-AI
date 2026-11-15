@@ -14,3 +14,9 @@ captures/
 *.pcapng
 *.key
 *.pem
+
+# Local authentication and dashboard dependencies
+.soc-token
+.soc-token.*
+dashboard/node_modules/
+dashboard/dist/
