@@ -1,0 +1,6 @@
+{
+  "source": "synthetic-test",
+  "event_type": "ssh_auth_failure",
+  "host": "demo-host",
+  "details": {"message": "Synthetic authentication failure"}
+}
