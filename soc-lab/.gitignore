@@ -1,0 +1,22 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.db
+*.sqlite*
+.env
+.env.*
+!.env.example
+reports/
+logs/
+captures/
+*.pcap
+*.pcapng
+*.key
+*.pem
+
+# Local authentication and dashboard dependencies
+.soc-token
+.soc-token.*
+dashboard/node_modules/
+dashboard/dist/

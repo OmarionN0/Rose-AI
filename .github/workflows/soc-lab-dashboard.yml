@@ -1,0 +1,27 @@
+name: SOC Lab Dashboard Build
+on:
+  push:
+    paths:
+      - "soc-lab/dashboard/**"
+      - ".github/workflows/soc-lab-dashboard.yml"
+  pull_request:
+    paths:
+      - "soc-lab/dashboard/**"
+      - ".github/workflows/soc-lab-dashboard.yml"
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: soc-lab/dashboard
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install frontend dependencies
+        run: npm install --no-audit --no-fund
+      - name: Compile React dashboard
+        run: npm run build
