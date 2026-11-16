@@ -26,7 +26,7 @@ def load_token():
     if not TOKEN_FILE.exists():
         fd = os.open(TOKEN_FILE, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
         with os.fdopen(fd, 'w') as stream:
-            stream.write(secrets.token_urlsafe(48) + '\\n')
+            stream.write(secrets.token_urlsafe(48) + '\n')
     token = TOKEN_FILE.read_text().strip()
     if len(token) < 32:
         raise ValueError('Local token file is invalid')
@@ -76,7 +76,7 @@ def main():
     except KeyboardInterrupt:
         print('R.O.S.E. SOC Lab stopped.')
     except (ValueError, RuntimeError, OSError) as exc:
-        parser.exit(1, 'Startup error: ' + str(exc) + '\\n')
+        parser.exit(1, 'Startup error: ' + str(exc) + '\n')
 
 
 if __name__ == '__main__':
